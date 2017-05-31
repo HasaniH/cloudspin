@@ -14,6 +14,6 @@ Copyright 2017 Google Inc.
  limitations under the License.
 -->
 <resources>
-    <string name="app_name">cloud_spin_v2</string>
+    <string name="app_name">cloudspin2</string>
     <string name="record_button">Record Video</string>
 </resources>

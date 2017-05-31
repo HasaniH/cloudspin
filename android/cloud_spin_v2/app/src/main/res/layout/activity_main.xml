@@ -19,7 +19,7 @@ Copyright 2017 Google Inc.
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cloud_spin.hasanih.cloud_spin_v2.MainActivity">
+    tools:context="com.google.cloudspinphoto.MainActivity">
 
     <Button
         android:id="@+id/videorec"

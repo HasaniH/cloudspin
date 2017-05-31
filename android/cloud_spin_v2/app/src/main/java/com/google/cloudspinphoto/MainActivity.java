@@ -12,13 +12,14 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-package com.cloud_spin.hasanih.cloud_spin_v2;
+package com.google.cloudspinphoto;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             // already signed in
+            Log.v("hello", "world");
         } else {
             // not signed in
             startActivityForResult(

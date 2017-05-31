@@ -1,6 +1,4 @@
-package com.cloud_spin.hasanih.cloud_spin_v2;
-
-import android.provider.MediaStore;
+package com.google.cloudspinphoto;
 
 import com.google.firebase.database.DatabaseReference;
 

@@ -17,6 +17,8 @@ Copyright 2017 Google Inc.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cloud_spin.hasanih.cloud_spin_v2">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,6 +32,7 @@ Copyright 2017 Google Inc.
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SignInActivity" />
     </application>
 
 </manifest>

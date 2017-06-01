@@ -17,6 +17,7 @@ package com.google.cloudspinphoto;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +30,9 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.ResultCodes;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button click = (Button)findViewById(R.id.videorec);
         result_video = (VideoView)findViewById(R.id.videoView);
+        Button signOutButton = (Button) findViewById(R.id.signOut);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
@@ -80,6 +84,22 @@ public class MainActivity extends AppCompatActivity {
                                     new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
                             .build(),
                     RC_SIGN_IN);
+
+            signOutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AuthUI.getInstance()
+                            .signOut(MainActivity.this)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    //user is now signed out
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    finish();
+                                }
+                            });
+
+                }
+            });
 
         }
     }
@@ -126,11 +146,10 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-                    Toast.makeText(MainActivity.this, "Unknown Error.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "This should never happen.", Toast.LENGTH_LONG).show();
                     return;
                 }
             }
-
         }
 
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
@@ -139,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
             //full path already has mStorage path so, ignore this substring when
             // assigning filepath
-            StorageReference filepath = mStorage.child(full_path.replace(mStorage.toString(), ""));
+            StorageReference filepath = mStorage.child(full_path.replace(mStorage.toString(), "") + ".mp4");
 
             filepath.putFile(videoUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override

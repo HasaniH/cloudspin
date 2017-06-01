@@ -31,10 +31,7 @@ Copyright 2017 Google Inc.
         android:text="@string/record_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.503"
-        android:layout_marginRight="8dp" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <VideoView
         android:id="@+id/videoView"
@@ -49,15 +46,5 @@ Copyright 2017 Google Inc.
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/signOut"
-        android:layout_width="101dp"
-        android:layout_height="41dp"
-        android:onClick="signOut"
-        android:text="@string/signout"
-        tools:layout_editor_absoluteY="424dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

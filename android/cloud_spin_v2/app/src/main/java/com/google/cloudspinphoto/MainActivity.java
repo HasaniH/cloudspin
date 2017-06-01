@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-                    Toast.makeText(MainActivity.this, "Unknown Error.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "This should never happen!", Toast.LENGTH_LONG).show();
                     return;
                 }
             }

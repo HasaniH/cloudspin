@@ -41,71 +41,70 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Grab a database reference object
-    static DatabaseReference databaseClips;
-    static String id;
+    // Grab a database reference object
+    private DatabaseReference mDatabaseClips;
+    private String mId;
+    private VideoView mResultVideo;
 
-    static final int REQUEST_VIDEO_CAPTURE = 1;
-    private static final int RC_SIGN_IN = 123;
-
-    VideoView result_video;
+    private final int mREQUEST_VIDEO_CAPTURE = 1;
+    private final int mRC_SIGN_IN = 123;
     private StorageReference mStorage;
-    static String full_path;
+    private String mFullPath;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.  onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        databaseClips = FirebaseDatabase.getInstance().getReference("VideoClips");
+        mDatabaseClips = FirebaseDatabase.getInstance().getReference("video-clips");
 
-        //Grab the database reference for the database root node
+        // Grab the database reference for the database root node
         mStorage = FirebaseStorage.getInstance().getReference();
-        full_path = mStorage.toString();
+        mFullPath = mStorage.toString();
 
         Button click = (Button)findViewById(R.id.videorec);
-        result_video = (VideoView)findViewById(R.id.videoView);
+        mResultVideo = (VideoView)findViewById(R.id.videoView);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            // already signed in
-            Log.v("hello", "world");
+            // Already signed in
+            //TODO @hasanih Display view that awaits for Firebase signals
+
         } else {
-            // not signed in
+            // Not signed in
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
                             .setProviders(Arrays.asList(
                                     new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
                             .build(),
-                    RC_SIGN_IN);
+                    mRC_SIGN_IN);
 
         }
     }
 
-
-    //On button click, this function creates a new intent and captures the video
-    public void dispatchTakeVideoIntent(View v) {
+    // On button click, this function creates a new intent and captures the video
+    private void dispatchTakeVideoIntent(View v) {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
-            id = databaseClips.push().getKey();
-            full_path += "Clips/" + id;
+            startActivityForResult(takeVideoIntent, mREQUEST_VIDEO_CAPTURE);
+            mId = mDatabaseClips.push().getKey();
+            mFullPath += "Clips/" + mId;
         }
     }
 
-    protected void addClipToDatabase(String status) {
-        VideoClip videoClip = new VideoClip(id, status, "1", "1", full_path);
-        videoClip.sendToFirebaseDatabase(databaseClips, videoClip, id);
+    private void addClipToDatabase(String status) {
+        VideoClip videoClip = new VideoClip(mId, status, "1", "1", mFullPath);
+        videoClip.sendToFirebaseDatabase(mDatabaseClips, videoClip, mId);
     }
 
 
-    //Send file to firebase storage upon finished recording and send
-    //videoClip metadata to firebase database
+    // Send file to firebase storage upon finished recording and send
+    // videoClip metadata to firebase database
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == mRC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             // Successfully signed in
@@ -133,13 +132,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
+        if (requestCode == mREQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = data.getData();
             addClipToDatabase("Uploading");
 
-            //full path already has mStorage path so, ignore this substring when
+            // Full path already has mStorage path so, ignore this substring when
             // assigning filepath
-            StorageReference filepath = mStorage.child(full_path.replace(mStorage.toString(), ""));
+            StorageReference filepath = mStorage.child(mFullPath.replace(mStorage.toString(), ""));
 
             filepath.putFile(videoUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override

@@ -1,10 +1,20 @@
+// Copyright 2017 Google Inc.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
 package com.google.cloudspinphoto;
 
 import com.google.firebase.database.DatabaseReference;
-
-/**
- * Created by hasanih on 5/25/17.
- */
 
 public class VideoClip {
 
@@ -24,19 +34,35 @@ public class VideoClip {
         this.fullPath = fullPath;
     }
 
-    public String getClipId() { return clipId; }
+    public String getClipId() {
+        return clipId;
+    }
 
-    public String getstatus() { return status; }
+    public String getStatus() {
+        return status;
+    }
 
-    public String getRigId() { return rigId; }
+    public String getstatus() {
+        return status;
+    }
 
-    public String getPhoneId() { return phoneId; }
+    public String getRigId() {
+        return rigId;
+    }
 
-    public String getFullPath() { return fullPath; }
+    public String getPhoneId() {
+        return phoneId;
+    }
 
-    public void setStatus(String clipStatus) { this.status = clipStatus; }
+    public String getFullPath() {
+        return fullPath;
+    }
 
-    public void sendToFirebaseDatabase(DatabaseReference databaseClips, VideoClip clip, String id){
+    public void setStatus(String clipStatus) {
+        this.status = clipStatus;
+    }
+
+    public void sendToFirebaseDatabase(DatabaseReference databaseClips, VideoClip clip, String id) {
         databaseClips.child(id).setValue(clip);
     }
 }

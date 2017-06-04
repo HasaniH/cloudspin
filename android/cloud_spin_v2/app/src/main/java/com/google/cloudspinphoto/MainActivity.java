@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private String mId;
     private VideoView mResultVideo;
 
-    private final int mREQUEST_VIDEO_CAPTURE = 1;
-    private final int mRC_SIGN_IN = 123;
+    public final int REQUEST_VIDEO_CAPTURE = 1;
+    public final int RC_SIGN_IN = 123;
     private StorageReference mStorage;
     private String mFullPath;
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                             .setProviders(Arrays.asList(
                                     new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
                             .build(),
-                    mRC_SIGN_IN);
+                    RC_SIGN_IN);
 
         }
     }
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private void dispatchTakeVideoIntent(View v) {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takeVideoIntent, mREQUEST_VIDEO_CAPTURE);
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
             mId = mDatabaseClips.push().getKey();
             mFullPath += "Clips/" + mId;
         }
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     // videoClip metadata to firebase database
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == mRC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             // Successfully signed in
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        if (requestCode == mREQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = data.getData();
             addClipToDatabase("Uploading");
 

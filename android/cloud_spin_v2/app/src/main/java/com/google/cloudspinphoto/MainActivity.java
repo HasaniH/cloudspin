@@ -44,7 +44,7 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Grab a database reference object
+    // Grab a database reference object
     static DatabaseReference databaseClips;
     static String id;
 
@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
         databaseClips = FirebaseDatabase.getInstance().getReference("VideoClips");
 
-        //Grab the database reference for the database root node
+        // Grab the database reference for the database root node
         mStorage = FirebaseStorage.getInstance().getReference();
         full_path = mStorage.toString();
 
         Button click = (Button)findViewById(R.id.videorec);
         result_video = (VideoView)findViewById(R.id.videoView);
-        Button signOutButton = (Button) findViewById(R.id.signOut);
+        Button signOutButton = (Button)findViewById(R.id.signOut);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                             .signOut(MainActivity.this)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    //user is now signed out
+                                    // User is now signed out
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     finish();
                                 }
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //On button click, this function creates a new intent and captures the video
+    // On button click, this function creates a new intent and captures the video
     public void dispatchTakeVideoIntent(View v) {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //Send file to firebase storage upon finished recording and send
-    //videoClip metadata to firebase database
+    // Send file to firebase storage upon finished recording and send
+    // videoClip metadata to firebase database
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RC_SIGN_IN) {
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             Uri videoUri = data.getData();
             addClipToDatabase("Uploading");
 
-            //full path already has mStorage path so, ignore this substring when
+            // Full path already has mStorage path so, ignore this substring when
             // assigning filepath
             StorageReference filepath = mStorage.child(full_path.replace(mStorage.toString(), "") + ".mp4");
 

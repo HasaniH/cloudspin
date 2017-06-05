@@ -16,5 +16,5 @@ Copyright 2017 Google Inc.
 <resources>
     <string name="app_name">cloudspin2</string>
     <string name="record_button">Record Video</string>
-    <string name="signout">Sign Out</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

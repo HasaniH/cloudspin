@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button click = (Button)findViewById(R.id.videorec);
         result_video = (VideoView)findViewById(R.id.videoView);
-        Button signOutButton = (Button)findViewById(R.id.signOut);
+        Button mSignOutButton = (Button)findViewById(R.id.signOut);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                             .build(),
                     RC_SIGN_IN);
 
-            signOutButton.setOnClickListener(new View.OnClickListener() {
+            mSignOutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AuthUI.getInstance()
